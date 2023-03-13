@@ -1,0 +1,21 @@
+{
+  "name": "@algosigner/common",
+  "version": "1.11.0",
+  "author": "https://developer.purestake.io",
+  "description": "Common library functions for AlgoSigner.",
+  "repository": "https://github.com/PureStake/algosigner",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^27.0.0",
+    "jest": "27.0.0",
+    "jest-webextension-mock": "^3.6.1",
+    "ts-jest": "^27.0.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.4"
+  },
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf ./dist/",
+    "test": "jest"
+  }
+}

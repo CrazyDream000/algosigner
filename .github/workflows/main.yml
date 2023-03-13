@@ -1,0 +1,68 @@
+name: Build and Test
+
+on:
+  push:
+    branches-ignore:
+      - release
+
+jobs:
+  unit_tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    env:
+      CI: 'true'
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16.15'
+    - name: Install build dependencies
+      run: npm run install:extension
+    - name: Run unit tests
+      run: npm run test:unit
+  end_to_end_tests:
+    name: End to End Tests
+    runs-on: ubuntu-latest
+    env:
+      CI: 'true'
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16.15'
+    - name: Install test dependencies
+      env:
+        PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+      run: npm run postinstall
+    - name: Build
+      run: npm run build
+    - name: Run headful puppeteer tests
+      uses: mujo-code/puppeteer-headful@16.6.0
+      with:
+        args: npm run test:github
+    - name: Upload screenshots
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: screenshot
+        path: ./packages/test-project/screenshots/*.png
+        retention-days: 5
+  build:
+    name: Zip and Upload Build
+    runs-on: ubuntu-latest
+    env:
+      CI: 'true'
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '16.15'
+    - name: Install build dependencies
+      run: npm run install:extension
+    - name: Build
+      run: npm run build
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: build
+        path: ./dist/*

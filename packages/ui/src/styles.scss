@@ -1,0 +1,290 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+// Main extension window
+$extension-height: 550px;
+$extension-width: 400px;
+
+html {
+  height: $extension-height;
+  width: $extension-width;
+  overflow: hidden !important;
+  background: #222 !important;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+}
+
+// Global font size
+$body-size: 15px;
+
+// Theme colors
+$grey-lighter: #eff4f7;
+$grey: #8a9fa8;
+
+$orange-light: #ff9548;
+$orange: #f16522;
+$orange-dark: #d64500;
+
+$blue-light: #9095af;
+$blue: #222b60;
+$blue-dark: #222b60;
+
+$red-light: rgba(231, 183, 183, 0.5);
+
+$family-sans-serif: 'Roboto', sans-serif;
+$primary: $blue;
+$link: $orange;
+// $danger: $red-light;
+$input-border-color: $grey;
+$control-border-width: 1px;
+$input-shadow: none;
+$input-radius: 12px;
+
+// TABS
+$tabs-toggle-link-active-background-color: $blue;
+$tabs-toggle-link-active-border-color: $blue-light;
+
+// MODAL
+$modal-close-right: 4px;
+$modal-close-top: 8px;
+
+// DROPDOWN
+$dropdown-item-active-background-color: $blue-dark;
+
+// TOOLTIP
+$tooltip-background-opacity: 1;
+
+[data-tooltip]:not(.is-loading).has-tooltip-bottom.has-tooltip-bottom-left::before{
+  width: fit-content;
+  transform: translate(-5%, 100%);
+}
+
+[data-tooltip]:not(.is-loading).has-tooltip-bottom.has-tooltip-bottom-right::before{
+  width: fit-content;
+  transform: translate(-90%, 100%);
+}
+
+// BOX
+// $box-shadow: none;
+
+.main-view {
+  display: flex;
+  flex: 1;
+  flex-basis: 100vh;
+}
+
+.account-preview.box {
+  text-overflow: ellipsis;
+  background: $grey-lighter;
+  min-height: 3.3em;
+  cursor: pointer;
+}
+
+.contact-preview.box {
+  display: flex;
+  background: $grey-lighter;
+  box-shadow: none;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@import 'bulma/sass/utilities/_all.sass';
+@import 'bulma/sass/base/_all.sass';
+@import 'bulma/sass/helpers/_all.sass';
+@import 'bulma/sass/elements/box.sass';
+@import 'bulma/sass/elements/button.sass';
+@import 'bulma/sass/elements/container.sass';
+@import 'bulma/sass/elements/table.sass';
+@import 'bulma/sass/elements/title.sass';
+@import 'bulma/sass/elements/progress.sass';
+@import 'bulma/sass/form/_all.sass';
+@import 'bulma/sass/layout/section.sass';
+@import 'bulma/sass/layout/hero.sass';
+@import 'bulma/sass/components/level.sass';
+@import 'bulma/sass/components/modal.sass';
+@import 'bulma/sass/components/dropdown.sass';
+@import 'bulma/sass/components/tabs.sass';
+@import 'bulma/sass/grid/columns.sass';
+@import '@creativebulma/bulma-tooltip';
+
+// Bulma Overrides
+.modal-content {
+  max-height: calc(100vh - 100px);
+  padding: 0 15px;
+}
+
+.modal-background {
+  width: 100vw;
+  height: 100vh;
+}
+
+.progress::-webkit-progress-value {
+  transition: width 0.5s ease;
+}
+
+a:hover {
+  color: $orange-dark;
+}
+
+span[data-tooltip] {
+  cursor: help !important;
+}
+
+.box.small {
+  padding: 0.75rem;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}
+
+// Custom classes
+.header {
+  flex: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $grey-lighter;
+  min-height: 39px;
+  background: white;
+}
+
+.menu {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  visibility: hidden;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.2), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+
+  &.is-active {
+    visibility: visible;
+  }
+
+  .menu-item {
+    display: block;
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid $grey-lighter;
+  }
+}
+
+.dropdown-mask {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -5;
+}
+
+.loader {
+  @include loader;
+  border-width: 1px;
+  border-bottom-color: #94b1c3;
+  border-left-color: #94b1c3;
+}
+
+.alias-selector-container {
+  @extend .dropdown-content;
+  position: absolute;
+  top: 55%;
+  z-index: 3;
+  width: 370px;
+  border: solid $blue-dark 1px;
+  border-top-width: 0;
+  border-radius: 12px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  overflow: hidden;
+}
+
+.alias-selector-content {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+// Used during the signing tx preview 
+.truncate-text {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  max-width: 25ch;
+  white-space: nowrap;
+  display: block;
+}
+
+// Used for  previewing tx keys that have a list of values
+p.value-list span {
+  display: block;
+  &:not(:first-child) {
+    margin-top: -6px;
+  }
+}
+
+// Custom IDs
+#destinationAddress:not(:placeholder-shown) {
+  border-color: $blue-dark;
+}
+
+#mnemonicBlock {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  text-align: right;
+
+  & .word-block {
+    display: flex;
+    justify-content: space-between;
+    width: 32%;
+    padding-bottom: 3px;
+
+    label {
+      display: flex;
+      justify-content: flex-end;
+      width: 22px;
+    }
+
+    input {
+      width: 55%;
+    }
+  }
+
+  & .mnemonic-visibility {
+    width: 20px;
+  }
+}
+
+
+#approveTx:disabled {
+  color: $red;
+}
+
+#txAlerts {
+  font-size: 0.8rem;
+}
+
+#warning-tx-list {
+  border-left: 5px solid rgb(255, 215, 0);
+  background-color: rgb(255, 215, 0, 0.1);
+}
+
+#danger-tx-list {
+  border-left: 5px solid rgb(255, 0, 0);
+  background-color: rgb(255, 0, 0, 0.1);
+}
+
+.network-modify label {
+  float: left;
+  font-size: small;
+  margin-bottom: 0.25rem;
+}
+.network-modify input {
+  font-size: smaller;
+  margin-bottom: 0.5rem;
+}
